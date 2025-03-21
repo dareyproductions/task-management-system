@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="recent-activities">
+    <h3>Recent Activities</h3>
+    <ul id="activity-list">
+        {% for activity in recent_activities %}
+            <li>
+                <span><strong>{{ activity.user.username }}</strong> {{ activity.get_action_display }} 
+                <strong>{{ activity.task.title }}</strong></span> 
+                <span class="timestamp">{{ activity.timestamp|timesince }} ago</span>
+            </li>
+        {% empty %}
+            <li>No recent activities.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
+<!-- Task Analytics Section -->
+<div class="dashboard-metrics">
+    <div class="metric-card">
+        <h3>Total Tasks</h3>
+        <p>{{ total_tasks }}</p>
+    </div>
+    <div class="metric-card">
+        <h3>Completed Tasks</h3>
+        <p>{{ completed_tasks }}</p>
+    </div>
+    <div class="metric-card">
+        <h3>Overdue Tasks</h3>
+        <p>{{ overdue_tasks }}</p>
+    </div>
+</div>
+
+<!-- Task Status Chart -->
+<div class="chart-container">
+    <canvas id="tasksByStatusChart"></canvas>
+</div>
+
+<!-- Priority Chart -->
+<div class="chart-container">
+    <canvas id="priorityChart"></canvas>
+</div>
+
+<!-- Inject Django Data for Charts -->
+{{ status_labels|json_script:"statusLabels" }}
+{{ status_counts|json_script:"statusCounts" }}
+{{ priority_labels|json_script:"priorityLabels" }}
+{{ priority_counts|json_script:"priorityCounts" }}
+
+<script>
+
+var socket = new WebSocket("ws://" + window.location.host + "/ws/activity/");
+    
+    socket.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        var activityList = document.getElementById("activity-list");
+        var newActivity = document.createElement("li");
+
+        newActivity.innerHTML = `<span><strong>${data.message}</strong></span>
+                                <span class="timestamp">Just now</span>`;
+        newActivity.style.opacity = "0";  // Start invisible
+
+        activityList.prepend(newActivity);
+
+        setTimeout(() => {
+            newActivity.style.opacity = "1";  // Fade-in effect
+        }, 100);
+
+        // Remove old activities beyond 10
+        if (activityList.children.length > 10) {
+            activityList.removeChild(activityList.lastChild);
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Task Status Chart
+        var ctx1 = document.getElementById('tasksByStatusChart').getContext('2d');
+        var statusLabels = JSON.parse(document.getElementById('statusLabels').textContent);
+        var statusCounts = JSON.parse(document.getElementById('statusCounts').textContent);
+
+        new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: statusLabels,  
+                datasets: [{
+                    label: 'Tasks by Status',
+                    data: statusCounts,  
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9C27B0', '#FFC107']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // Task Priority Chart
+        var ctx2 = document.getElementById('priorityChart').getContext('2d');
+        var priorityLabels = JSON.parse(document.getElementById('priorityLabels').textContent);
+        var priorityCounts = JSON.parse(document.getElementById('priorityCounts').textContent);
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: priorityLabels,
+                datasets: [{
+                    label: 'Tasks by Priority',
+                    data: priorityCounts,
+                    backgroundColor: ['#ff6384', '#ff9f40', '#ffcd56', '#4bc0c0'],
+                    borderWidth: 1
+                }]
+            }
+        });
+    });
+</script>
+
+{% endblock %}

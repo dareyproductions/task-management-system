@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="register card shadow p-4" style="width: 400px;">
+            <h3 class="text-center mb-3">📝 Register</h3>
+    
+            {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <ul class="mb-0">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li><strong>{{ field|title }}:</strong> {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+    
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" placeholder="Confirm your password" required>
+                </div>
+    
+                <div class="mb-3">
+                    <label for="role" class="form-label">Select Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="Project Manager">Project Manager</option>
+                        <option value="Developer">Developer</option>
+                    </select>
+                </div>
+    
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+    
+            <p class="text-center mt-3">
+                Already have an account? <a href="{% url 'login' %}" class="text-decoration-none">Login here</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

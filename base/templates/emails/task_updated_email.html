@@ -1,0 +1,14 @@
+<h2>Task Updated: {{ task.title }}</h2>
+
+<p>Hello,</p>
+
+<p>The task <strong>{{ task.title }}</strong> has been updated.</p>
+
+<p><strong>Updated By:</strong> {{ updated_by }}</p>
+<p><strong>Previous Status:</strong> <span style="color: red;">{{ old_status }}</span></p>
+<p><strong>New Status:</strong> <span style="color: green;">{{ new_status }}</span></p>
+<p><strong>Due Date:</strong> {{ task.due_date }}</p>
+
+<a href="{{ task_url }}" style="background: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">View Task Details</a>
+
+<p>Thank you.</p>

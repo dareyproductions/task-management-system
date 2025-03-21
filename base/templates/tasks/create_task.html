@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <div class="form-container">
+        <h2>Create a New Task</h2>
+    
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li><strong>{{ field|title }}:</strong> {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Title:</label>
+                {{ form.title }}
+            </div>
+    
+            <div class="mb-3">
+                <label for="id_description" class="form-label">Description:</label>
+                {{ form.description }}
+            </div>
+    
+            <div class="mb-3">
+                <label for="id_due_date" class="form-label">Due Date:</label>
+                {{ form.due_date }}
+            </div>
+    
+            <div class="mb-3">
+                <label for="id_priority" class="form-label">Priority:</label>
+                {{ form.priority }}
+            </div>
+    
+            <div class="mb-3">
+                <label for="id_status" class="form-label">Status:</label>
+                {{ form.status }}
+            </div>
+    
+            <div class="mb-3">
+                <label for="id_assigned_to" class="form-label">Assign To:</label>
+                {{ form.assigned_to }}
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+    
+        <a href="{% url 'task_list' %}" class="btn btn-secondary mt-3">← Back to Task List</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,703 @@
+/* Import a modern Google Font */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap'); */
+
+/* body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f7fc;
+    margin: 0;
+    padding: 0;
+} */
+
+/* NAVBAR STYLING */
+/* .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #1f2937;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.username {
+    font-weight: bold;
+    color: white;
+    margin-right: 10px;
+}
+
+.login-btn, .register-btn, .logout-btn {
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-btn { background: #3498db; color: white; }
+.register-btn { background: #2ecc71; color: white; }
+.logout-btn { background: #e74c3c; color: white; }
+
+.login-btn:hover { background: #217dbb; }
+.register-btn:hover { background: #1f9b57; }
+.logout-btn:hover { background: #c0392b; } */
+
+
+/* TASK CONTAINER */
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* TASK CARDS */
+/* Remove default link styles from task cards */
+.task-link {
+    text-decoration: none;
+    color: inherit;
+}
+/* .task-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    border-left: 6px solid transparent;
+    transition: transform 0.2s ease-in-out;
+} */
+
+.task-card:hover {
+    transform: scale(1.03); /* Slightly enlarge on hover */
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+}
+
+.task-actions {
+    margin-top: 10px;  /* Adds space above the button */
+    text-align: right;  /* Aligns button to the right */
+}
+
+/* Update Task Button */
+.update-btn {
+    display: inline-block;  /* Makes it behave like a button */
+    background-color: #007bff;  /* Blue color */
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;  /* Darker blue on hover */
+}
+
+/* Update Task Button */
+.update-task-btn {
+    display: inline-block;
+    background-color: #28a745; /* Green */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.update-task-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+
+/* Priority Colors */
+/* .urgent { border-left-color: #e63946; }
+.high { border-left-color: #f77f00; }
+.medium { border-left-color: #ffca3a; }
+.low { border-left-color: #2a9d8f; } */
+
+/* STATUS BADGES */
+/* .status {
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 10px;
+} */
+
+/* .status.not-started { background: gray; }
+.status.pending { background: orange; }
+.status.in-progress { background: blue; }
+.status.review { background: purple; } /* New color for review */
+/* .status.submitted { background: teal; } 
+.status.completed { background: green; } */
+
+/* ✅ Status Colors */
+/* ✅ Fix Status Badge Colors */
+.status {
+    color: white !important;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.status.not-started { background-color: gray !important; }
+.status.pending { background-color: orange !important; }
+.status.in-progress { background-color: blue !important; }
+.status.review { background-color: purple !important; } 
+.status.submitted { background-color: teal !important; }
+.status.completed { background-color: green !important; }
+
+/* ✅ Fix Priority Colors (Border Left) */
+.urgent { border-left-color: #e63946 !important; } /* 🔴 Dark Red */
+.high { border-left-color: #f77f00 !important; }   /* 🟠 Orange */
+.medium { border-left-color: #ffca3a !important; } /* 🟡 Yellow */
+.low { border-left-color: #2a9d8f !important; }    /* 🟢 Teal */
+
+/* ✅ Task Card Styling */
+.task-card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Improve dropdown styles */
+.form-select {
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    transform: translateY(5px);
+    color: #686972;
+    border: 0;
+}
+
+/* ✅ Add icon spacing */
+.form-select option {
+    padding-left: 10px;
+}
+
+/* ✅ Improve date input appearance */
+input[type="date"] {
+    border-radius: 8px;
+    padding: 6px;
+}
+
+
+
+/* PROJECT LINK BUTTON */
+.btn-link {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-link:hover {
+    background: #0056b3;
+}
+
+/* FORM STYLING */
+/* Form Container */
+.form-container {
+    max-width: 500px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    margin-top: 30px;
+}
+
+/* Form Labels */
+.form-container label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+}
+
+/* Form Inputs */
+.form-container input:not([type="checkbox"]), 
+.form-container textarea,
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.form-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.form-container ul li {
+    display: flex;
+    align-items: center;  /* Align checkbox and text */
+    gap: 8px;  /* Space between checkbox and text */
+}
+
+.form-container ul li input[type="checkbox"] {
+    transform: translateY(2px); /* Adjust the vertical position */
+}
+
+
+
+/* Submit Button */
+.btn-submit {
+    background: #007bff;
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+
+/* Back Button */
+.btn-back {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-pagination {
+    padding: 8px 14px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-pagination:hover {
+    background: #0056b3;
+}
+
+
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+
+.auth-container p {
+    margin-top: 10px;
+}
+
+/* 📌 Messages Styling */
+.messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: auto;
+    max-width: 350px;
+    z-index: 1050;
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 🎨 Message Colors */
+.messages .success { background-color: #28a745; }  /* Green */
+.messages .error { background-color: #dc3545; }    /* Red */
+.messages .warning { background-color: #ffc107; }  /* Yellow */
+.messages .info { background-color: #17a2b8; }      /* Blue */
+
+/* ✨ Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-list li {
+    background: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.comment-list small {
+    color: gray;
+    font-size: 12px;
+}
+
+.btn-submit {
+    background: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #0056b3;
+}
+
+
+/* Task Detail Page */
+.task-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.task-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-description {
+    font-size: 16px;
+    color: #555;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Status Colors */
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status.not-started {
+    background-color: gray;
+    color: white;
+}
+
+.status.in-progress {
+    background-color: blue;
+    color: white;
+}
+
+.status.pending {
+    background-color: orange;
+    color: white;
+}
+
+.status.review {
+    background-color: purple;
+    color: white;
+}
+
+.status.submitted {
+    background-color: teal;
+    color: white;
+}
+
+.status.completed {
+    background-color: green;
+    color: white;
+}
+
+/* Comment Section */
+.comment-section {
+    margin-top: 30px;
+}
+
+.comment-box {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Chat Bubble Style */
+.comment {
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 75%;
+}
+
+.user-comment {
+    background: #007bff;
+    color: white;
+    align-self: flex-end;
+    text-align: right;
+    border-top-right-radius: 0;
+}
+
+.other-comment {
+    background: #e5e5e5;
+    color: black;
+    border-top-left-radius: 0;
+}
+
+/* Comment Meta */
+.comment-meta {
+    display: block;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #666;
+}
+
+/* Add Comment */
+.comment-form {
+    display: flex;
+    margin-top: 10px;
+}
+
+.comment-form textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-comment {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-comment:hover {
+    background: #0056b3;
+}
+
+/* Back Button */
+.btn-back {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+.search-form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* 🔍 Search & Filter Styling */
+.task-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-input,
+.filter-dropdown,
+.date-picker,
+.filter-btn,
+.reset-btn {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-dropdown,
+.date-picker {
+    min-width: 150px;
+}
+
+.filter-btn {
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background: #0056b3;
+}
+
+.reset-btn {
+    background: #dc3545;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 15px;
+}
+
+.reset-btn:hover {
+    background: #a71d2a;
+}
+
+/* 📋 Task List Styling */
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.task-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.task-card.urgent { border-left: 4px solid red; }
+.task-card.high { border-left: 4px solid orange; }
+.task-card.medium { border-left: 4px solid yellow; }
+.task-card.low { border-left: 4px solid green; }
+
+.task-actions {
+    text-align: right;
+    margin-top: 10px;
+}

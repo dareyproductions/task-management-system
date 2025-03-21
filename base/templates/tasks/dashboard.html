@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Task Manager Dashboard </h2>
+                        <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="ecommerce-widget">
+
+                <div class="row1">
+                    <div class="cardd col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Total Tasks</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{ total_tasks }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardd col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Completed Tasks</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{ completed_tasks }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardd col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-muted">Overdue Tasks</h5>
+                                <div class="metric-value d-inline-block">
+                                    <h1 class="mb-1">{{ overdue_tasks }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- ============================================================== -->
+                                              <!-- product category  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Tasks by Status</h5>
+                            <div class="card-body">
+                                <canvas id="tasksByStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end product category  -->
+                           <!-- product sales  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Tasks by Priority</h5>
+                            <div class="card-body">
+                                <canvas id="priorityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end product sales  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <!-- ============================================================== -->
+                        <!-- top perfomimg  -->
+                        <!-- ============================================================== -->
+                        <div class="card">
+                            <h5 class="card-header">Recent Activities</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <ul id="activity-list">
+                                        {% for activity in recent_activities %}
+                                            <li>
+                                                <span><strong>{{ activity.user.username }}</strong> {{ activity.get_action_display }} 
+                                                <strong>{{ activity.task.title }}</strong></span> 
+                                                <span class="timestamp">{{ activity.timestamp|timesince }} ago</span>
+                                            </li>
+                                        {% empty %}
+                                            <li>No recent activities.</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end top perfomimg  -->
+                        <!-- ============================================================== -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inject Django Data for Charts -->
+{{ status_labels|json_script:"statusLabels" }}
+{{ status_counts|json_script:"statusCounts" }}
+{{ priority_labels|json_script:"priorityLabels" }}
+{{ priority_counts|json_script:"priorityCounts" }}
+
+<script>
+
+var socket = new WebSocket("ws://" + window.location.host + "/ws/activity/");
+    
+    socket.onmessage = function(event) {
+        var data = JSON.parse(event.data);
+        var activityList = document.getElementById("activity-list");
+        var newActivity = document.createElement("li");
+
+        newActivity.innerHTML = `<span><strong>${data.message}</strong></span>
+                                <span class="timestamp">Just now</span>`;
+        newActivity.style.opacity = "0";  // Start invisible
+
+        activityList.prepend(newActivity);
+
+        setTimeout(() => {
+            newActivity.style.opacity = "1";  // Fade-in effect
+        }, 100);
+
+        // Remove old activities beyond 10
+        if (activityList.children.length > 10) {
+            activityList.removeChild(activityList.lastChild);
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Task Status Chart
+        var ctx1 = document.getElementById('tasksByStatusChart').getContext('2d');
+        var statusLabels = JSON.parse(document.getElementById('statusLabels').textContent);
+        var statusCounts = JSON.parse(document.getElementById('statusCounts').textContent);
+
+        new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: statusLabels,  
+                datasets: [{
+                    label: 'Tasks by Status',
+                    data: statusCounts,  
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9C27B0', '#FFC107']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // Task Priority Chart
+        var ctx2 = document.getElementById('priorityChart').getContext('2d');
+        var priorityLabels = JSON.parse(document.getElementById('priorityLabels').textContent);
+        var priorityCounts = JSON.parse(document.getElementById('priorityCounts').textContent);
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: priorityLabels,
+                datasets: [{
+                    label: 'Tasks by Priority',
+                    data: priorityCounts,
+                    backgroundColor: ['#ff6384', '#ff9f40', '#ffcd56', '#4bc0c0'],
+                    borderWidth: 1
+                }]
+            }
+        });
+    });
+</script>
+
+
+{% endblock content %}

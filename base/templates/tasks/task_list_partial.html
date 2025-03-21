@@ -1,0 +1,42 @@
+<!-- Task Container -->
+<div class="task-container">
+    {% for task in page_obj %}
+        <div class="task-card {{ task.priority|lower }}">
+            <a href="{% url 'task_detail' task.id %}" class="task-link">
+                <h3>{{ task.title }}</h3>
+                <p><strong>Assigned To:</strong> 
+                    {% for user in task.assigned_to.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% empty %} No assignees {% endfor %}
+                </p>
+                <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+                <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+                <span class="status {{ task.status|lower|slugify }}">{{ task.get_status_display }}</span>
+            </a>
+        
+            <div class="task-actions">
+                <a href="{% url 'update_task' task.id %}" class="update-btn">Update</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No tasks available.</p>
+    {% endfor %}
+</div>
+
+<!-- Pagination with AJAX -->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1&{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" class="btn-pagination ajax-pagination">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}&{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" class="btn-pagination ajax-pagination">Previous</a>
+    {% endif %}
+
+    <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" class="btn-pagination ajax-pagination">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" class="btn-pagination ajax-pagination">Last</a>
+    {% endif %}
+</div>
+
+
+

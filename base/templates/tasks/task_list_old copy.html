@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Task List</h2>
+
+    <!-- 🔍 Search & Filter Section -->
+    <form method="GET" class="task-filter-form">
+        <input type="text" name="q" value="{{ query }}" placeholder="🔍 Search tasks..." class="search-input">
+
+        <select name="status" class="filter-dropdown">
+            <option value="">Filter by Status</option>
+            {% for key, value in status_choices %}
+                <option value="{{ key }}" {% if request.GET.status == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="priority" class="filter-dropdown">
+            <option value="">Filter by Priority</option>
+            {% for key, value in priority_choices %}
+                <option value="{{ key }}" {% if request.GET.priority == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="date" name="start_date" value="{{ request.GET.start_date }}" class="date-picker">
+        <input type="date" name="end_date" value="{{ request.GET.end_date }}" class="date-picker">
+
+        <button type="submit" class="filter-btn">Apply Filters</button>
+        <a href="{% url 'task_list' %}" class="reset-btn">Reset</a>
+    </form>
+
+    <!-- 📝 Task Container -->
+    <div class="task-container">
+        {% for task in page_obj %}
+        <div class="task-card {{ task.priority|lower }}">
+            <a href="{% url 'task_detail' task.id %}" class="task-link">
+                <h3>{{ task.title }}</h3>
+                <p><strong>Assigned To:</strong> 
+                    {% for user in task.assigned_to.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No assignees
+                    {% endfor %}
+                </p>
+                <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+                <p><strong>Priority:</strong> {{ task.get_priority_display }}</p>
+                <span class="status {{ task.status|lower|slugify }}">{{ task.get_status_display }}</span>
+            </a>
+        
+            <div class="task-actions">
+                <a href="{% url 'update_task' task.id %}" class="update-btn">Update</a>
+            </div>
+        </div>
+        
+        {% empty %}
+            <p>No tasks available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- ✅ Regular Pagination -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn-pagination">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn-pagination">Previous</a>
+        {% endif %}
+
+        <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn-pagination">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-pagination">Last</a>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

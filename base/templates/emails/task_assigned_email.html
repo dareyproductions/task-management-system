@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .email-container {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h2>New Task Assigned: {{ task.title }}</h2>
+        <p>Hello,</p>
+        <p>A new task has been assigned to you:</p>
+        <ul>
+            <li><strong>Task:</strong> {{ task.title }}</li>
+            <li><strong>Priority:</strong> {{ task.priority }}</li>
+            <li><strong>Due Date:</strong> {{ task.due_date }}</li>
+        </ul>
+        <p>Click below to view your task:</p>
+        <a href="{{ task_url }}" class="button">View Task</a>
+        <p>Best,<br>Your Task Management System</p>
+    </div>
+</body>
+</html>

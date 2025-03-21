@@ -1,0 +1,34 @@
+<nav>
+    <ul>
+        <li><a href="{% url 'task_list' %}">Home</a></li>
+        <li><a href="{% url 'create_task' %}">Create Task</a></li>
+    </ul>
+</nav>
+
+<style>
+nav {
+    background: #007bff;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+</style>
