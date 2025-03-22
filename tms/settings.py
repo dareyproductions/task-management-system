@@ -24,9 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0(9xs(zofr6@+obruwgvq9c4vt72u*ovju^7z8__bpzdyzhan-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["task-management-system-production-ae97.up.railway.app"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://task-management-system-production-ae97.up.railway.app",
+]
+
 
 
 # Application definition
