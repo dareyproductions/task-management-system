@@ -79,11 +79,15 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
+# "postgresql://postgres:BFEdRLKXdhEhAKyZXumWbJhPUauEGVEr@maglev.proxy.rlwy.net:54482/railway"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
