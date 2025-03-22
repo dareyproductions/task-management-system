@@ -1,0 +1,13 @@
+# Ignore environment variables
+.env
+
+# Ignore Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore database files
+db.sqlite3
+
+# Ignore virtual environments
+venv/
