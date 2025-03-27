@@ -74,7 +74,7 @@ def send_task_email(task, subject, template_name, recipients):
 
     context = {
         'task': task,
-        'task_url': f"https://task-management-system-production-ae97.up.railway.app/tasks/{task.id}"
+        'task_url': f"https://task-management-system-production-ae97.up.railway.app/task/{task.id}"
     }
 
     # ✅ Corrected line - Use `template_name` properly
@@ -100,7 +100,7 @@ def send_task_update_email(task, updated_by, old_status):
         'updated_by': str(updated_by),
         'old_status': old_status,
         'new_status': task.status,  # Updated status
-        'task_url': f"https://task-management-system-production-ae97.up.railway.app/tasks/{task.id}"
+        'task_url': f"https://task-management-system-production-ae97.up.railway.app/task/{task.id}"
     }
 
     html_message = render_to_string('emails/task_updated_email.html', context)
