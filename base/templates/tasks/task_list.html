@@ -11,7 +11,7 @@
                 <input type="text" name="q" value="{{ query }}" placeholder="🔍 Search tasks..." class="form-control">
             </div>
             <div class="mb-3">
-                <select name="status" class="form-select">
+                <select name="status" class="form-select" style="height: 35px; padding: 5px; margin-left: 5px; margin-right: 5px; color: #686972; border: 1px solid #686972;">
                     <option value="">Filter by Status</option>
                     {% for key, value in status_choices %}
                         <option value="{{ key }}" {% if request.GET.status == key %}selected{% endif %}>{{ value }}</option>
@@ -19,7 +19,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <select name="priority" class="form-select">
+                <select name="priority" class="form-select" style="height: 35px; padding: 5px; margin-left: 5px; color: #686972; border: 1px solid #686972;">
                     <option value="">Filter by Priority</option>
                     {% for key, value in priority_choices %}
                         <option value="{{ key }}" {% if request.GET.priority == key %}selected{% endif %}>{{ value }}</option>
@@ -33,10 +33,10 @@
                 <input type="date" name="end_date" value="{{ request.GET.end_date }}" class="form-control">
             </div>
             <div class="col-md-1 d-grid">
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <button type="submit" class="btn btn-sm btn-outline-primary">Filter</button>
             </div>
             <div class="col-md-1 d-grid">
-                <a href="{% url 'task_list' %}" class="btn btn-secondary">Reset</a>
+                <a href="{% url 'task_list' %}" class="btn btn-outline-secondary">Reset</a>
             </div>
         </form>
     

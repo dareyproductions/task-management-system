@@ -1,1 +1,1 @@
-web: gunicorn tms.wsgi --log-file -
+web: gunicorn tms.wsgi:application

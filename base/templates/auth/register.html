@@ -2,7 +2,7 @@
 {% block content %}
 <div class="dashboard-wrapper">
     <div class="d-flex justify-content-center align-items-center min-vh-100">
-        <div class="register card shadow p-4" style="width: 400px;">
+        <div class="register shadow p-4" style="width: 400px;">
             <h3 class="text-center mb-3">📝 Register</h3>
     
             {% if form.errors %}
@@ -41,13 +41,13 @@
     
                 <div class="mb-3">
                     <label for="role" class="form-label">Select Role</label>
-                    <select name="role" class="form-select" required>
+                    <select name="role" class="form-select" required style="height: 30px; padding: 2px;">
                         <option value="Project Manager">Project Manager</option>
                         <option value="Developer">Developer</option>
                     </select>
                 </div>
     
-                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <button type="submit" class="btn btn-primary w-100" style="background-color: #0e0c28;">Register</button>
             </form>
     
             <p class="text-center mt-3">

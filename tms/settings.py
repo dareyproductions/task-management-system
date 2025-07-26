@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,16 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0(9xs(zofr6@+obruwgvq9c4vt72u*ovju^7z8__bpzdyzhan-'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["task-management-system-production-ae97.up.railway.app"]
+ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://task-management-system-production-ae97.up.railway.app",
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "*",
+# ]
 
 
 
@@ -84,13 +85,37 @@ WSGI_APPLICATION = 'tms.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 import dj_database_url
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(conn_max_age=600)
 }
+
+
+# DATABASES = {
+#     # 'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'tms_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'darexpon',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 # "postgresql://postgres:BFEdRLKXdhEhAKyZXumWbJhPUauEGVEr@maglev.proxy.rlwy.net:54482/railway"
 
@@ -131,6 +156,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Ensure you have a 'static' folder
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -155,8 +181,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'daramolaponmilee@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'sxbsocluzavninhz'  # Use App Password, NOT your actual password
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Use App Password, NOT your actual password
 DEFAULT_FROM_EMAIL = 'Task Manager <daramolaponmilee@gmail.com>'
 
 LOGIN_URL = '/login/'
