@@ -10,5 +10,5 @@ urlpatterns = [
     path('update<int:id>/', updateTaskStatus, name='update_task'),
     path('task/<int:id>/', taskDetail, name='task_detail'),
     path('', dashboard, name='dashboard'),
-    path('create-superuser/', create_superuser_once, name='create_superuser'),
+    # path('create-superuser/', create_superuser_once, name='create_superuser'),
 ]
