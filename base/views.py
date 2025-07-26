@@ -337,21 +337,3 @@ def log_activity(user, task, action):
             "message": f"{user.username} {activity.get_action_display()} on {task.title}"
         }
     )
-
-
-# from django.contrib.auth import get_user_model
-# from django.http import HttpResponse
-
-# def create_superuser_once(request):
-#     User = get_user_model()
-#     if User.objects.filter(email="admin@example.com").exists():
-#         return HttpResponse("Superuser already exists.")
-
-#     User.objects.create_superuser(
-#         email="dareyproductions@gmail.com",
-#         username="dareyproductions",
-#         password="Dareyproductions7#",
-#         first_name="Darey",
-#         last_name="Productions"
-#     )
-#     return HttpResponse("Superuser created successfully.")
